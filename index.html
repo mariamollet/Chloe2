@@ -29,7 +29,7 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
-        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
+        <button id="enviar-btn" style="display: none;" onclick="mostrarFormulario()">Enviar</button>
     </div>
 
     <div id="resultado" style="display: none;">
@@ -38,12 +38,7 @@
         <p id="nombre-usuario"></p>
     </div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
     <script>
-        // Inicializar EmailJS
-        emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
-
         let images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
             'https://i.postimg.cc/brzdpLvk/Imagen13.jpg', 'https://i.postimg.cc/2jwV2pHw/Imagen14.jpg', 'https://i.postimg.cc/MKpXLsN8/Imagen15.jpg', 
@@ -108,24 +103,26 @@
             document.getElementById('enviar-btn').style.display = 'block';
         }
 
-        // Función para enviar el formulario con el nombre y la imagen seleccionada
-        function enviarFormulario() {
-            if (ultimaImagenSeleccionada === '') {
-                alert('Por favor, selecciona una imagen antes de enviar.');
-                return;
-            }
+        // Función para mostrar el formulario de envío
+        function mostrarFormulario() {
+            const form = document.createElement('form');
+            form.setAttribute('action', 'https://formspree.io/f/mldjrqzr');
+            form.setAttribute('method', 'POST');
 
-            const templateParams = {
-                nombre: nombrePersona,
-                imagen: ultimaImagenSeleccionada
-            };
+            const nombreInput = document.createElement('input');
+            nombreInput.setAttribute('type', 'hidden');
+            nombreInput.setAttribute('name', 'nombre');
+            nombreInput.value = nombrePersona;
+            form.appendChild(nombreInput);
 
-            emailjs.send('service_qbcal6k', 'template_nkotijh', templateParams)
-                .then(function(response) {
-                    alert('¡Formulario enviado con éxito!');
-                }, function(error) {
-                    alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
-                });
+            const imagenInput = document.createElement('input');
+            imagenInput.setAttribute('type', 'hidden');
+            imagenInput.setAttribute('name', 'imagen');
+            imagenInput.value = ultimaImagenSeleccionada;
+            form.appendChild(imagenInput);
+
+            // Enviar el formulario
+            form.submit();
         }
     </script>
 </body>
