@@ -9,6 +9,8 @@
         .image-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
         img { width: 300px; height: auto; cursor: pointer; border: 3px solid transparent; }
         img:hover { border-color: blue; }
+        #final-image { margin-top: 20px; }
+        #enviar-btn { display: none; }
     </style>
 </head>
 <body>
@@ -30,8 +32,8 @@
         </div>
         <p id="mensaje"></p>
 
-        <!-- Imagen seleccionada final y botón de enviar -->
-        <div id="imagen-final" style="display: none;">
+        <!-- Imagen final y botón de enviar -->
+        <div id="final-image" style="display: none;">
             <h3>Última imagen seleccionada:</h3>
             <img id="imagen-resultado" width="300" />
             <button id="enviar-btn" onclick="enviarFormulario()">Enviar</button>
@@ -42,7 +44,7 @@
 
     <script>
         // Inicializar EmailJS
-        emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
+        emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza con tu ID de usuario de EmailJS
 
         const images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
@@ -52,7 +54,7 @@
 
         let index = 1;
         let nombrePersona = '';
-        let ultimaImagenSeleccionada = ''; // Para almacenar la última imagen seleccionada
+        let ultimaImagenSeleccionada = '';
 
         // Cargar las primeras dos imágenes
         document.getElementById('img1').src = images[0];
@@ -87,7 +89,7 @@
                 // Si ya no hay más imágenes, mostrar la imagen final seleccionada
                 if (index === images.length) {
                     document.getElementById('imagen-resultado').src = ultimaImagenSeleccionada;
-                    document.getElementById('imagen-final').style.display = 'block';
+                    document.getElementById('final-image').style.display = 'block';
                     document.getElementById('enviar-btn').style.display = 'block';
                     alert('Has completado la selección');
                 }
