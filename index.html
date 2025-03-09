@@ -29,21 +29,18 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
-        <button id="enviar-btn" style="display: none;" onclick="mostrarFormulario()">Enviar</button>
     </div>
 
     <div id="resultado" style="display: none;">
         <h3>Tu imagen ganadora</h3>
         <img id="final-image" width="300px" height="auto" />
         <p id="nombre-usuario"></p>
+        <form id="form" action="https://formspree.io/f/mldjrqzr" method="POST">
+            <input type="text" name="nombre" id="form-nombre" required />
+            <input type="text" name="imagen" id="form-imagen" required />
+            <button type="submit" id="submit-btn">Enviar</button>
+        </form>
     </div>
-
-    <!-- Formulario estático para enviar datos a Formspree -->
-    <form id="form" action="https://formspree.io/f/mldjrqzr" method="POST" style="display: none;">
-        <input type="text" name="nombre" id="form-nombre" required />
-        <input type="text" name="imagen" id="form-imagen" required />
-        <button type="submit" id="submit-btn" style="display: none;">Enviar</button>
-    </form>
 
     <script>
         let images = [
@@ -104,23 +101,17 @@
             document.getElementById('final-image').src = ultimaImagenSeleccionada;
             document.getElementById('nombre-usuario').innerText = `Nombre del usuario: ${nombrePersona}`;
 
-            // Mostrar el resultado y el botón para enviar el formulario
+            // Mostrar el resultado y el formulario de envío
             document.getElementById('test').style.display = 'none';
             document.getElementById('resultado').style.display = 'block';
-            document.getElementById('enviar-btn').style.display = 'block';
-        }
 
-        // Función para mostrar el formulario de envío
-        function mostrarFormulario() {
             // Rellenar los campos ocultos con los datos
             document.getElementById('form-nombre').value = nombrePersona;
             document.getElementById('form-imagen').value = ultimaImagenSeleccionada;
-
-            // Enviar el formulario
-            document.getElementById('form').submit();
         }
     </script>
 </body>
 </html>
+
 
 
