@@ -75,26 +75,23 @@
             // Guardar la imagen seleccionada
             ultimaImagenSeleccionada = images[selected];
 
-            // Eliminar la imagen que no ha sido seleccionada
+            // Eliminar la imagen no seleccionada de la matriz de imágenes
             if (selected === 0) {
-                // Reemplazamos la imagen en la posición 1
-                images.splice(1, 1); 
+                // Si selecciona la imagen de la izquierda (img1), mantenemos img1 y cambiamos img2
+                document.getElementById('img2').src = images[index];
             } else {
-                // Reemplazamos la imagen en la posición 0
-                images.splice(0, 1);
+                // Si selecciona la imagen de la derecha (img2), mantenemos img2 y cambiamos img1
+                document.getElementById('img1').src = images[index];
             }
 
-            // Si aún hay más imágenes, actualizamos las que se muestran
-            if (images.length > 1) {
-                document.getElementById('img1').src = images[0];
-                document.getElementById('img2').src = images[1];
-            }
+            // Incrementamos el índice para cargar la siguiente imagen en la posición vacía
+            index++;
 
             // Mostrar mensaje con la imagen seleccionada
             document.getElementById('mensaje').innerText = `Imagen seleccionada: ${ultimaImagenSeleccionada}`;
 
             // Si ya no hay más imágenes, mostrar el resultado
-            if (images.length === 1) {
+            if (index === images.length) {
                 mostrarResultado();
             }
         }
@@ -133,3 +130,4 @@
     </script>
 </body>
 </html>
+
