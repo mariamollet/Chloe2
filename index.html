@@ -29,14 +29,19 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
-        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
+        <!-- Se mostrará la imagen seleccionada final y el botón para enviar -->
+        <div id="imagen-final" style="display: none;">
+            <h3>Imagen seleccionada:</h3>
+            <img id="imagen-resultado" width="300" />
+            <button id="enviar-btn" onclick="enviarFormulario()">Enviar</button>
+        </div>
     </div>
 
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
     <script>
         // Inicializar EmailJS
-        emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
+        emailjs.init('nM5mMnOrZJCwTqxb1');  // Tu ID de usuario de EmailJS
 
         const images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
@@ -66,22 +71,26 @@
         // Función para seleccionar una imagen
         function selectImage(selected) {
             if (index < images.length) {
+                // Cambiar la imagen no seleccionada
                 if (selected === 0) {
-                    // Si la imagen de la izquierda (img1) es seleccionada, la derecha (img2) cambia
+                    // Si seleccionan la imagen de la izquierda, la imagen de la derecha cambia
                     document.getElementById('img2').src = images[index];
+                    imagenSeleccionada = images[0]; // La imagen de la izquierda es la seleccionada
                 } else {
-                    // Si la imagen de la derecha (img2) es seleccionada, la izquierda (img1) cambia
+                    // Si seleccionan la imagen de la derecha, la imagen de la izquierda cambia
                     document.getElementById('img1').src = images[index];
+                    imagenSeleccionada = images[1]; // La imagen de la derecha es la seleccionada
                 }
+
                 index++;
 
-                // Mostrar mensaje con la imagen seleccionada
-                document.getElementById('mensaje').innerText = `Imagen seleccionada: ${images[selected]}`;
+                // Mostrar la imagen seleccionada final
+                document.getElementById('imagen-resultado').src = imagenSeleccionada;
+                document.getElementById('imagen-final').style.display = 'block';
 
                 // Si ya no hay más imágenes, mostrar el botón para enviar
                 if (index === images.length) {
                     alert('Has completado la selección');
-                    document.getElementById('enviar-btn').style.display = 'block';
                 }
             }
         }
