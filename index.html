@@ -45,7 +45,6 @@
         ];
 
         let index = 1;
-        let currentImage = 0;
         let nombrePersona = '';
         let imagenSeleccionada = '';
 
@@ -66,25 +65,24 @@
 
         // Función para seleccionar una imagen
         function selectImage(selected) {
-            if (index < images.length - 1) {
-                // Si la imagen seleccionada es la primera imagen, no la movemos
+            if (index < images.length) {
                 if (selected === 0) {
-                    imagenSeleccionada = images[currentImage]; // La imagen seleccionada es la actual
+                    // Si la imagen de la izquierda (img1) es seleccionada, la derecha (img2) cambia
+                    document.getElementById('img2').src = images[index];
                 } else {
-                    imagenSeleccionada = images[index]; // La imagen seleccionada es la siguiente
+                    // Si la imagen de la derecha (img2) es seleccionada, la izquierda (img1) cambia
+                    document.getElementById('img1').src = images[index];
                 }
-
-                // Actualizar la imagen en su posición
-                currentImage = selected === 0 ? currentImage : index;
-
-                // Cambiar la imagen del lado opuesto
                 index++;
-                document.getElementById('img2').src = images[index];
 
-                document.getElementById('mensaje').innerText = `Imagen seleccionada: ${imagenSeleccionada}`;
-            } else {
-                alert('Has completado la selección');
-                document.getElementById('enviar-btn').style.display = 'block';
+                // Mostrar mensaje con la imagen seleccionada
+                document.getElementById('mensaje').innerText = `Imagen seleccionada: ${images[selected]}`;
+
+                // Si ya no hay más imágenes, mostrar el botón para enviar
+                if (index === images.length) {
+                    alert('Has completado la selección');
+                    document.getElementById('enviar-btn').style.display = 'block';
+                }
             }
         }
 
@@ -100,7 +98,7 @@
                 imagen: imagenSeleccionada
             };
 
-            emailjs.send('service_qbcal6k', 'Chloe2', templateParams)
+            emailjs.send('service_qbcal6k', 'template_nkotijh', templateParams)
                 .then(function(response) {
                     alert('¡Formulario enviado con éxito!');
                 }, function(error) {
