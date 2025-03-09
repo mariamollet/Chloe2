@@ -67,11 +67,20 @@
         // Función para seleccionar una imagen
         function selectImage(selected) {
             if (index < images.length - 1) {
+                // Si la imagen seleccionada es la primera imagen, no la movemos
+                if (selected === 0) {
+                    imagenSeleccionada = images[currentImage]; // La imagen seleccionada es la actual
+                } else {
+                    imagenSeleccionada = images[index]; // La imagen seleccionada es la siguiente
+                }
+
+                // Actualizar la imagen en su posición
                 currentImage = selected === 0 ? currentImage : index;
-                imagenSeleccionada = selected === 0 ? images[currentImage] : images[index];
+
+                // Cambiar la imagen del lado opuesto
                 index++;
-                document.getElementById('img1').src = images[currentImage];
                 document.getElementById('img2').src = images[index];
+
                 document.getElementById('mensaje').innerText = `Imagen seleccionada: ${imagenSeleccionada}`;
             } else {
                 alert('Has completado la selección');
