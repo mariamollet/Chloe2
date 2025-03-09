@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Selección de Fotos</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .image-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        img { width: 300px; height: auto; cursor: pointer; border: 3px solid transparent; }
+        img:hover { border-color: blue; }
+    </style>
+</head>
+<body>
+    <h2>Elige tu foto favorita</h2>
+    <div class="image-container">
+        <img id="img1" onclick="selectImage(0)" />
+        <img id="img2" onclick="selectImage(1)" />
+    </div>
+
+    <script>
+        const images = [
+            'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 'https://i.postimg.cc/brzdpLvk/Imagen13.jpg', 'https://i.postimg.cc/2jwV2pHw/Imagen14.jpg',            'https://i.postimg.cc/MKpXLsN8/Imagen15.jpg', 'https://i.postimg.cc/SN1jb6bY/Imagen16.jpg', 'https://i.postimg.cc/dV73shJH/Imagen17.jpg', 'https://i.postimg.cc/HkfxVTxp/Imagen18.jpg'
+        ];
+        let index = 1;
+        let currentImage = 0;
+
+        document.getElementById('img1').src = images[0];
+        document.getElementById('img2').src = images[1];
+
+        function selectImage(selected) {
+            if (index < images.length - 1) {
+                currentImage = selected === 0 ? currentImage : index;
+                index++;
+                document.getElementById('img1').src = images[currentImage];
+                document.getElementById('img2').src = images[index];
+            } else {
+                alert('Has completado la selección');
+            }
+        }
+    </script>
+</body>
+</html>
