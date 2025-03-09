@@ -12,31 +12,91 @@
     </style>
 </head>
 <body>
-    <h2>Elige tu foto favorita</h2>
-    <div class="image-container">
-        <img id="img1" onclick="selectImage(0)" />
-        <img id="img2" onclick="selectImage(1)" />
+    <h2>Bienvenido al Test de Selección de Fotos</h2>
+
+    <!-- Formulario para ingresar el nombre -->
+    <div id="nombre-form">
+        <label for="nombre">¿Cuál es tu nombre?</label>
+        <input type="text" id="nombre" placeholder="Escribe tu nombre" required>
+        <button onclick="iniciarTest()">Comenzar Test</button>
     </div>
 
+    <!-- Test con imágenes -->
+    <div id="test" style="display: none;">
+        <h3>Elige tu foto favorita</h3>
+        <div class="image-container">
+            <img id="img1" onclick="selectImage(0)" />
+            <img id="img2" onclick="selectImage(1)" />
+        </div>
+        <p id="mensaje"></p>
+        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
+    </div>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
     <script>
+        // Inicializar EmailJS
+        emailjs.init('tu_user_id');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
+
         const images = [
-            'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 'https://i.postimg.cc/brzdpLvk/Imagen13.jpg', 'https://i.postimg.cc/2jwV2pHw/Imagen14.jpg',            'https://i.postimg.cc/MKpXLsN8/Imagen15.jpg', 'https://i.postimg.cc/SN1jb6bY/Imagen16.jpg', 'https://i.postimg.cc/dV73shJH/Imagen17.jpg', 'https://i.postimg.cc/HkfxVTxp/Imagen18.jpg'
+            'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
+            'https://i.postimg.cc/brzdpLvk/Imagen13.jpg', 'https://i.postimg.cc/2jwV2pHw/Imagen14.jpg', 'https://i.postimg.cc/MKpXLsN8/Imagen15.jpg', 
+            'https://i.postimg.cc/SN1jb6bY/Imagen16.jpg', 'https://i.postimg.cc/dV73shJH/Imagen17.jpg', 'https://i.postimg.cc/HkfxVTxp/Imagen18.jpg'
         ];
+
         let index = 1;
         let currentImage = 0;
+        let nombrePersona = '';
+        let imagenSeleccionada = '';
 
+        // Cargar las primeras dos imágenes
         document.getElementById('img1').src = images[0];
         document.getElementById('img2').src = images[1];
 
+        // Función para iniciar el test después de ingresar el nombre
+        function iniciarTest() {
+            nombrePersona = document.getElementById('nombre').value;
+            if (nombrePersona.trim() === '') {
+                alert('Por favor, escribe tu nombre.');
+                return;
+            }
+            document.getElementById('nombre-form').style.display = 'none';
+            document.getElementById('test').style.display = 'block';
+        }
+
+        // Función para seleccionar una imagen
         function selectImage(selected) {
             if (index < images.length - 1) {
                 currentImage = selected === 0 ? currentImage : index;
+                imagenSeleccionada = selected === 0 ? images[currentImage] : images[index];
                 index++;
                 document.getElementById('img1').src = images[currentImage];
                 document.getElementById('img2').src = images[index];
+                document.getElementById('mensaje').innerText = `Imagen seleccionada: ${imagenSeleccionada}`;
             } else {
                 alert('Has completado la selección');
+                document.getElementById('enviar-btn').style.display = 'block';
             }
+        }
+
+        // Función para enviar el formulario con el nombre y la imagen seleccionada
+        function enviarFormulario() {
+            if (imagenSeleccionada === '') {
+                alert('Por favor, selecciona una imagen antes de enviar.');
+                return;
+            }
+
+            const templateParams = {
+                nombre: nombrePersona,
+                imagen: imagenSeleccionada
+            };
+
+            emailjs.send('tu_service_id', 'tu_template_id', templateParams)
+                .then(function(response) {
+                    alert('¡Formulario enviado con éxito!');
+                }, function(error) {
+                    alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
+                });
         }
     </script>
 </body>
