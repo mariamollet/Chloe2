@@ -29,14 +29,13 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
+        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
     </div>
 
-    <!-- Resultado de la imagen ganadora -->
     <div id="resultado" style="display: none;">
         <h3>Tu imagen ganadora</h3>
         <img id="final-image" width="300px" height="auto" />
         <p id="nombre-usuario"></p>
-        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
     </div>
 
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -75,23 +74,24 @@
             // Guardar la imagen seleccionada
             ultimaImagenSeleccionada = images[selected];
 
-            // Eliminar la imagen no seleccionada de la matriz de imágenes
+            // Eliminar la imagen que no ha sido seleccionada
             if (selected === 0) {
-                // Si selecciona la imagen de la izquierda (img1), mantenemos img1 y cambiamos img2
-                document.getElementById('img2').src = images[index];
+                images.splice(1, 1); // Eliminamos la imagen en la posición 1 (la no seleccionada)
             } else {
-                // Si selecciona la imagen de la derecha (img2), mantenemos img2 y cambiamos img1
-                document.getElementById('img1').src = images[index];
+                images.splice(0, 1); // Eliminamos la imagen en la posición 0 (la no seleccionada)
             }
 
-            // Incrementamos el índice para cargar la siguiente imagen en la posición vacía
-            index++;
+            // Si aún hay más imágenes, actualizamos las que se muestran
+            if (images.length > 1) {
+                document.getElementById('img1').src = images[0];
+                document.getElementById('img2').src = images[1];
+            }
 
             // Mostrar mensaje con la imagen seleccionada
             document.getElementById('mensaje').innerText = `Imagen seleccionada: ${ultimaImagenSeleccionada}`;
 
             // Si ya no hay más imágenes, mostrar el resultado
-            if (index === images.length) {
+            if (images.length === 1) {
                 mostrarResultado();
             }
         }
@@ -105,7 +105,7 @@
             // Mostrar el resultado y el botón para enviar el formulario
             document.getElementById('test').style.display = 'none';
             document.getElementById('resultado').style.display = 'block';
-            document.getElementById('enviar-btn').style.display = 'block';  // Ahora el botón de enviar aparece
+            document.getElementById('enviar-btn').style.display = 'block';
         }
 
         // Función para enviar el formulario con el nombre y la imagen seleccionada
