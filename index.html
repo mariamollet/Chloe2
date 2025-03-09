@@ -52,7 +52,7 @@
 
         let index = 1;
         let nombrePersona = '';
-        let ultimaImagenSeleccionada = '';
+        let ultimaImagenSeleccionada = '';  // Se guarda la última imagen seleccionada
 
         // Cargar las primeras dos imágenes
         document.getElementById('img1').src = images[0];
@@ -86,7 +86,7 @@
                 // Mostrar mensaje con la imagen seleccionada
                 document.getElementById('mensaje').innerText = `Imagen seleccionada: ${images[selected]}`;
 
-                // Si ya no hay más imágenes, mostrar el botón para enviar
+                // Si ya no hay más imágenes, mostrar el resultado
                 if (index === images.length) {
                     alert('Has completado la selección');
                     document.getElementById('test').style.display = 'none';
@@ -124,5 +124,3 @@
     </script>
 </body>
 </html>
-
- 
