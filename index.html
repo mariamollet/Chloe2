@@ -29,13 +29,14 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
-        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
     </div>
 
+    <!-- Resultado de la imagen ganadora -->
     <div id="resultado" style="display: none;">
         <h3>Tu imagen ganadora</h3>
         <img id="final-image" width="300px" height="auto" />
         <p id="nombre-usuario"></p>
+        <button id="enviar-btn" style="display: none;" onclick="enviarFormulario()">Enviar</button>
     </div>
 
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -76,9 +77,11 @@
 
             // Eliminar la imagen que no ha sido seleccionada
             if (selected === 0) {
-                images.splice(1, 1); // Eliminamos la imagen en la posición 1 (la no seleccionada)
+                // Reemplazamos la imagen en la posición 1
+                images.splice(1, 1); 
             } else {
-                images.splice(0, 1); // Eliminamos la imagen en la posición 0 (la no seleccionada)
+                // Reemplazamos la imagen en la posición 0
+                images.splice(0, 1);
             }
 
             // Si aún hay más imágenes, actualizamos las que se muestran
@@ -105,7 +108,7 @@
             // Mostrar el resultado y el botón para enviar el formulario
             document.getElementById('test').style.display = 'none';
             document.getElementById('resultado').style.display = 'block';
-            document.getElementById('enviar-btn').style.display = 'block';
+            document.getElementById('enviar-btn').style.display = 'block';  // Ahora el botón de enviar aparece
         }
 
         // Función para enviar el formulario con el nombre y la imagen seleccionada
