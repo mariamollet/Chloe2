@@ -44,7 +44,7 @@
         // Inicializar EmailJS
         emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
 
-        const images = [
+        let images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
             'https://i.postimg.cc/brzdpLvk/Imagen13.jpg', 'https://i.postimg.cc/2jwV2pHw/Imagen14.jpg', 'https://i.postimg.cc/MKpXLsN8/Imagen15.jpg', 
             'https://i.postimg.cc/SN1jb6bY/Imagen16.jpg', 'https://i.postimg.cc/dV73shJH/Imagen17.jpg', 'https://i.postimg.cc/HkfxVTxp/Imagen18.jpg'
@@ -71,34 +71,36 @@
 
         // Función para seleccionar una imagen
         function selectImage(selected) {
-            if (index < images.length) {
-                if (selected === 0) {
-                    // Si la imagen de la izquierda (img1) es seleccionada, la derecha (img2) cambia
-                    ultimaImagenSeleccionada = images[0]; // Guardar la imagen seleccionada
-                    document.getElementById('img2').src = images[index];
-                } else {
-                    // Si la imagen de la derecha (img2) es seleccionada, la izquierda (img1) cambia
-                    ultimaImagenSeleccionada = images[1]; // Guardar la imagen seleccionada
-                    document.getElementById('img1').src = images[index];
-                }
-                index++;
+            // Eliminar la imagen que no ha sido seleccionada
+            if (selected === 0) {
+                ultimaImagenSeleccionada = images[1]; // Guardamos la imagen seleccionada
+                images.splice(1, 1); // Eliminamos la imagen que no fue seleccionada (posición 1)
+            } else {
+                ultimaImagenSeleccionada = images[0]; // Guardamos la imagen seleccionada
+                images.splice(0, 1); // Eliminamos la imagen que no fue seleccionada (posición 0)
+            }
 
-                // Mostrar mensaje con la imagen seleccionada
-                document.getElementById('mensaje').innerText = `Imagen seleccionada: ${images[selected]}`;
+            // Actualizar las imágenes para mostrar las siguientes opciones
+            if (images.length > 1) {
+                document.getElementById('img1').src = images[0];
+                document.getElementById('img2').src = images[1];
+            }
 
-                // Si ya no hay más imágenes, mostrar el resultado
-                if (index === images.length) {
-                    alert('Has completado la selección');
-                    document.getElementById('test').style.display = 'none';
-                    document.getElementById('resultado').style.display = 'block';
+            // Mostrar mensaje con la imagen seleccionada
+            document.getElementById('mensaje').innerText = `Imagen seleccionada: ${ultimaImagenSeleccionada}`;
 
-                    // Mostrar la última imagen seleccionada
-                    document.getElementById('final-image').src = ultimaImagenSeleccionada;
-                    document.getElementById('nombre-usuario').innerText = `Nombre del usuario: ${nombrePersona}`;
+            // Si ya no hay más imágenes, mostrar el resultado
+            if (images.length === 1) {
+                alert('Has completado la selección');
+                document.getElementById('test').style.display = 'none';
+                document.getElementById('resultado').style.display = 'block';
 
-                    // Mostrar el botón de enviar
-                    document.getElementById('enviar-btn').style.display = 'block';
-                }
+                // Mostrar la última imagen seleccionada
+                document.getElementById('final-image').src = ultimaImagenSeleccionada;
+                document.getElementById('nombre-usuario').innerText = `Nombre del usuario: ${nombrePersona}`;
+
+                // Mostrar el botón de enviar
+                document.getElementById('enviar-btn').style.display = 'block';
             }
         }
 
