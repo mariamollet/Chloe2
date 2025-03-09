@@ -29,9 +29,10 @@
             <img id="img2" onclick="selectImage(1)" />
         </div>
         <p id="mensaje"></p>
-        <!-- Se mostrará la imagen seleccionada final y el botón para enviar -->
+
+        <!-- Imagen seleccionada final y botón de enviar -->
         <div id="imagen-final" style="display: none;">
-            <h3>Imagen seleccionada:</h3>
+            <h3>Última imagen seleccionada:</h3>
             <img id="imagen-resultado" width="300" />
             <button id="enviar-btn" onclick="enviarFormulario()">Enviar</button>
         </div>
@@ -41,7 +42,7 @@
 
     <script>
         // Inicializar EmailJS
-        emailjs.init('nM5mMnOrZJCwTqxb1');  // Tu ID de usuario de EmailJS
+        emailjs.init('nM5mMnOrZJCwTqxb1');  // Reemplaza 'tu_user_id' con tu ID de usuario de EmailJS
 
         const images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
@@ -51,7 +52,7 @@
 
         let index = 1;
         let nombrePersona = '';
-        let imagenSeleccionada = '';
+        let ultimaImagenSeleccionada = ''; // Para almacenar la última imagen seleccionada
 
         // Cargar las primeras dos imágenes
         document.getElementById('img1').src = images[0];
@@ -71,25 +72,23 @@
         // Función para seleccionar una imagen
         function selectImage(selected) {
             if (index < images.length) {
-                // Cambiar la imagen no seleccionada
                 if (selected === 0) {
-                    // Si seleccionan la imagen de la izquierda, la imagen de la derecha cambia
-                    document.getElementById('img2').src = images[index];
-                    imagenSeleccionada = images[0]; // La imagen de la izquierda es la seleccionada
+                    // Si la imagen de la izquierda (img1) es seleccionada, la derecha (img2) cambia
+                    ultimaImagenSeleccionada = images[0]; // Imagen izquierda seleccionada
+                    document.getElementById('img2').src = images[index]; // Cambiar la imagen derecha
                 } else {
-                    // Si seleccionan la imagen de la derecha, la imagen de la izquierda cambia
-                    document.getElementById('img1').src = images[index];
-                    imagenSeleccionada = images[1]; // La imagen de la derecha es la seleccionada
+                    // Si la imagen de la derecha (img2) es seleccionada, la izquierda (img1) cambia
+                    ultimaImagenSeleccionada = images[1]; // Imagen derecha seleccionada
+                    document.getElementById('img1').src = images[index]; // Cambiar la imagen izquierda
                 }
 
                 index++;
 
-                // Mostrar la imagen seleccionada final
-                document.getElementById('imagen-resultado').src = imagenSeleccionada;
-                document.getElementById('imagen-final').style.display = 'block';
-
-                // Si ya no hay más imágenes, mostrar el botón para enviar
+                // Si ya no hay más imágenes, mostrar la imagen final seleccionada
                 if (index === images.length) {
+                    document.getElementById('imagen-resultado').src = ultimaImagenSeleccionada;
+                    document.getElementById('imagen-final').style.display = 'block';
+                    document.getElementById('enviar-btn').style.display = 'block';
                     alert('Has completado la selección');
                 }
             }
@@ -97,14 +96,14 @@
 
         // Función para enviar el formulario con el nombre y la imagen seleccionada
         function enviarFormulario() {
-            if (imagenSeleccionada === '') {
+            if (ultimaImagenSeleccionada === '') {
                 alert('Por favor, selecciona una imagen antes de enviar.');
                 return;
             }
 
             const templateParams = {
                 nombre: nombrePersona,
-                imagen: imagenSeleccionada
+                imagen: ultimaImagenSeleccionada
             };
 
             emailjs.send('service_qbcal6k', 'template_nkotijh', templateParams)
