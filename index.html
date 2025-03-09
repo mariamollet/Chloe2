@@ -109,24 +109,34 @@
         }
 
         // Función para enviar el formulario con el nombre y la imagen seleccionada
-        function enviarFormulario() {
-            if (ultimaImagenSeleccionada === '') {
-                alert('Por favor, selecciona una imagen antes de enviar.');
-                return;
-            }
+function enviarFormulario() {
+    // Verifica si la imagen seleccionada es válida
+    if (ultimaImagenSeleccionada === '') {
+        alert('Por favor, selecciona una imagen antes de enviar.');
+        return;
+    }
 
-            const templateParams = {
-                nombre: nombrePersona,
-                imagen: ultimaImagenSeleccionada
-            };
+    // Verificar los datos en la consola antes de enviarlos
+    console.log("Nombre del usuario:", nombrePersona); // Muestra el nombre del usuario
+    console.log("Imagen seleccionada:", ultimaImagenSeleccionada); // Muestra la URL de la imagen seleccionada
 
-            emailjs.send('service_qbcal6k', 'template_nkotijh', templateParams)
-                .then(function(response) {
-                    alert('¡Formulario enviado con éxito!');
-                }, function(error) {
-                    alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
-                });
-        }
+    // Crear los parámetros para enviar
+    const templateParams = {
+        nombre: nombrePersona,  // Valor que se pasará a la plantilla como 'nombre'
+        imagen: ultimaImagenSeleccionada // Valor que se pasará a la plantilla como 'imagen'
+    };
+
+    // Enviar el correo con los parámetros
+    emailjs.send('service_qbcal6k', 'template_nkotijh', templateParams)
+        .then(function(response) {
+            // Si todo sale bien, se muestra un mensaje de éxito
+            alert('¡Formulario enviado con éxito!');
+        }, function(error) {
+            // Si ocurre un error, se muestra el mensaje de error
+            console.error("Error al enviar el formulario:", error); // Muestra el error en la consola para depuración
+            alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
+        });
+}
     </script>
 </body>
 </html>
