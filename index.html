@@ -38,6 +38,13 @@
         <p id="nombre-usuario"></p>
     </div>
 
+    <!-- Formulario estático para enviar datos a Formspree -->
+    <form id="form" action="https://formspree.io/f/mldjrqzr" method="POST" style="display: none;">
+        <input type="text" name="nombre" id="form-nombre" required />
+        <input type="text" name="imagen" id="form-imagen" required />
+        <button type="submit" id="submit-btn" style="display: none;">Enviar</button>
+    </form>
+
     <script>
         let images = [
             'https://i.postimg.cc/FRX7nh5P/Imagen10.jpg', 'https://i.postimg.cc/G2P9W6bb/Imagen11.jpg', 'https://i.postimg.cc/mk8kDMcq/Imagen12.jpg', 
@@ -105,24 +112,12 @@
 
         // Función para mostrar el formulario de envío
         function mostrarFormulario() {
-            const form = document.createElement('form');
-            form.setAttribute('action', 'https://formspree.io/f/mldjrqzr');
-            form.setAttribute('method', 'POST');
-
-            const nombreInput = document.createElement('input');
-            nombreInput.setAttribute('type', 'hidden');
-            nombreInput.setAttribute('name', 'nombre');
-            nombreInput.value = nombrePersona;
-            form.appendChild(nombreInput);
-
-            const imagenInput = document.createElement('input');
-            imagenInput.setAttribute('type', 'hidden');
-            imagenInput.setAttribute('name', 'imagen');
-            imagenInput.value = ultimaImagenSeleccionada;
-            form.appendChild(imagenInput);
+            // Rellenar los campos ocultos con los datos
+            document.getElementById('form-nombre').value = nombrePersona;
+            document.getElementById('form-imagen').value = ultimaImagenSeleccionada;
 
             // Enviar el formulario
-            form.submit();
+            document.getElementById('form').submit();
         }
     </script>
 </body>
