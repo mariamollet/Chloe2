@@ -35,12 +35,10 @@
         <h3>Tu imagen ganadora</h3>
         <img id="final-image" width="300px" height="auto" />
         <p id="nombre-usuario"></p>
-        <form id="form" action="https://formspree.io/f/mldjrqzr" method="POST">
-            <input type="text" name="nombre" id="form-nombre" required />
-            <input type="text" name="imagen" id="form-imagen" required />
-            <button type="submit" id="submit-btn">Enviar</button>
-        </form>
+        <button id="enviar-btn" onclick="enviarFormulario()">Enviar</button>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
         let images = [
@@ -101,17 +99,35 @@
             document.getElementById('final-image').src = ultimaImagenSeleccionada;
             document.getElementById('nombre-usuario').innerText = `Nombre del usuario: ${nombrePersona}`;
 
-            // Mostrar el resultado y el formulario de envío
+            // Mostrar el resultado y el botón para enviar el formulario
             document.getElementById('test').style.display = 'none';
             document.getElementById('resultado').style.display = 'block';
+            document.getElementById('enviar-btn').style.display = 'block';  // Aseguramos que el botón se haga visible
+        }
 
-            // Rellenar los campos ocultos con los datos
-            document.getElementById('form-nombre').value = nombrePersona;
-            document.getElementById('form-imagen').value = ultimaImagenSeleccionada;
+        // Función para enviar el formulario con el nombre y la imagen seleccionada
+        function enviarFormulario() {
+            if (ultimaImagenSeleccionada === '') {
+                alert('Por favor, selecciona una imagen antes de enviar.');
+                return;
+            }
+
+            const data = {
+                nombre: nombrePersona,
+                imagen: ultimaImagenSeleccionada
+            };
+
+            // Usamos Axios para enviar el formulario a Formspree
+            axios.post('https://formspree.io/f/mldjrqzr', data)
+                .then(function(response) {
+                    alert('¡Formulario enviado con éxito!');
+                })
+                .catch(function(error) {
+                    alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
+                });
         }
     </script>
 </body>
 </html>
-
 
 
